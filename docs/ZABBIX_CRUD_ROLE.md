@@ -1,7 +1,5 @@
 # community.zabbix.zabbix_proxy role
 
-![Zabbix Proxy](https://github.com/ansible-collections/community.zabbix/workflows/community.zabbix.zabbix_proxy/badge.svg)
-
 **Table of Contents**
 
 - [Overview](#overview)
