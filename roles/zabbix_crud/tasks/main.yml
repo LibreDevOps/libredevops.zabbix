@@ -19,15 +19,15 @@
   ansible.builtin.set_fact:
     ansible_network_os: community.zabbix.zabbix
     ansible_connection: httpapi
-    ansible_httpapi_port: "{{ zabbix_crud_httpapi_port }}"
-    ansible_httpapi_use_ssl: "{{ zabbix_crud_httpapi_use_ssl }}"
-    ansible_httpapi_validate_certs: "{{ zabbix_crud_httpapi_validate_certs }}"
+    ansible_httpapi_port: "{{ zabbix_api_server_port }}"
+    ansible_httpapi_use_ssl: "{{ zabbix_api_use_ssl }}"
+    ansible_httpapi_validate_certs: "{{ zabbix_api_validate_certs }}"
     ansible_zabbix_url_path: "{{ zabbix_api_zabbix_url_path }}"
 
 - name: '[Zabbix CRUD] Set password access'
   ansible.builtin.set_fact:
-    ansible_user: "{{ zabbix_crud_login_user }}"
-    ansible_httpapi_pass: "{{ zabbix_crud_login_password }}"
+    ansible_user: "{{ zabbix_api_http_user }}"
+    ansible_httpapi_pass: "{{ zabbix_api_http_password }}"
   when: password_access and not token_access
 
 - name: '[Zabbix CRUD] Set token access'
