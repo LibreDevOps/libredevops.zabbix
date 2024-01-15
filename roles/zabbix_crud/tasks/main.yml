@@ -8,13 +8,12 @@
 - name: '[Zabbix CRUD] Register token access'
   set_fact:
     token_access:
-      "{{ zabbix_crud_auth_key is defined and zabbix_crud_auth_key is string and zabbix_crud_auth_key | length > 0 }}"
+      "{{ zabbix_api_auth_key is defined and zabbix_api_auth_key is string and zabbix_api_auth_key | length > 0 }}"
 
 - name: '[Zabbix CRUD] Check conflict between token and password access configuration'
-  ansible.builtin.assert:
-    that: ( password_access and token_access )
-    success_msg: were detect token method and user/password method, proceeding with token method.
-    quiet: no
+  ansible.builtin.debug:
+    msg: "Token method and user/password method was detected, proceeding with token method."
+  when: password_access and token_access
 
 - name: '[Zabbix CRUD] Set common facts connection vía API'
   ansible.builtin.set_fact:
@@ -23,7 +22,7 @@
     ansible_httpapi_port: "{{ zabbix_crud_httpapi_port }}"
     ansible_httpapi_use_ssl: "{{ zabbix_crud_httpapi_use_ssl }}"
     ansible_httpapi_validate_certs: "{{ zabbix_crud_httpapi_validate_certs }}"
-    ansible_zabbix_url_path: "{{ zabbix_crud_zabbix_url_path }}"
+    ansible_zabbix_url_path: "{{ zabbix_api_zabbix_url_path }}"
 
 - name: '[Zabbix CRUD] Set password access'
   ansible.builtin.set_fact:
@@ -33,8 +32,8 @@
 
 - name: '[Zabbix CRUD] Set token access'
   ansible.builtin.set_fact:
-    ansible_zabbix_auth_key: "{{ zabbix_crud_auth_key }}"
-  when: token_access or( token_access and password_access )
+    ansible_zabbix_auth_key: "{{ zabbix_api_auth_key }}"
+  when: token_access or ( token_access and password_access )
 
 - name: '[Zabbix CRUD] Wrap for zabbix_group - Create/Update/Delete Zabbix Host Groups'
   become: false

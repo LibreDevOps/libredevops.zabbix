@@ -2,13 +2,13 @@
 # defaults file for zabbix_crud
 
 # Defaults vars to connect via API:
-zabbix_crud_httpapi_port: 80
-zabbix_crud_httpapi_use_ssl: false
-zabbix_crud_httpapi_validate_certs: false
-zabbix_crud_zabbix_url_path: 'zabbix'
-zabbix_crud_login_user: "Admin"
-zabbix_crud_login_password: "zabbix"
-# zabbix_crud_auth_key: 8ec0d52432c15c91fcafe9888500cf9a607f44091ab554dbee860f6b44fac895
+zabbix_api_server_port: 80
+zabbix_api_use_ssl: false
+zabbix_api_validate_certs: false
+zabbix_api_url_path: 'zabbix'
+zabbix_api_http_user: "Admin"
+zabbix_api_http_password: "zabbix"
+# zabbix_api_auth_key: 8ec0d52432c15c91fcafe9888500cf9a607f44091ab554dbee860f6b44fac895
 
 
 zabbix_crud_mediatypes: []

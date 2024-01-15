@@ -38,13 +38,13 @@ See `defaults/main.yml` for more details.
 
 ## Zabbix API connection variables
 
-`zabbix_crud_httpapi_port`: connection httpapi port, `80` by default.
-`zabbix_crud_httpapi_use_ssl`: use SSL for httpapi connection, `false` by default.
-`zabbix_crud_httpapi_validate_certs`: validate certs for httpapi connection, `false` by default.
-`zabbix_crud_zabbix_url_path`: path to web directory or alias, `zabbix` by default.
-`zabbix_crud_login_user`: login user, `Admin` by default.
-`zabbix_crud_login_password`: login password, `zabbix` by default.
-`zabbix_crud_auth_key`: API token for access. Not set by default.
+`zabbix_api_server_port`: connection httpapi port, `80` by default.
+`zabbix_api_use_ssl`: use SSL for httpapi connection, `false` by default.
+`zabbix_api_validate_certs`: validate certs for httpapi connection, `false` by default.
+`zabbix_api_zabbix_url_path`: path to web directory or alias, `zabbix` by default.
+`zabbix_api_http_user`: login user, `Admin` by default.
+`zabbix_api_http_password`: login password, `zabbix` by default.
+`zabbix_api_auth_key`: API token for access. Not set by default.
 
 # Example Playbook
 
