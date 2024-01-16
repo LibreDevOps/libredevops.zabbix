@@ -3,7 +3,7 @@
 
 - name: '[Zabbix CRUD] Register password access'
   set_fact:
-    password_access: "{{ zabbix_crud_login_password is defined and zabbix_crud_login_password is string and zabbix_crud_login_password | length > 0 }}"
+    password_access: "{{ zabbix_api_http_password is defined and zabbix_api_http_password is string and zabbix_api_http_password | length > 0 }}"
 
 - name: '[Zabbix CRUD] Register token access'
   set_fact:
