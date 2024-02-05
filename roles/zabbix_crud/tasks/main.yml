@@ -147,7 +147,7 @@
     tls_subject: "{{ item.tls_subject | default(omit) }}"
     description: "{{ item.description | default(omit) }}"
     host_groups: "{{ item.host_groups }}"
-    link_templates: "{{ item.link_templates }}"
+    link_templates: "{{ item.link_templates | default(omit) }}"
     status: "{{ item.status | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
     interfaces: "{{ item.interfaces | default(omit) }}"
