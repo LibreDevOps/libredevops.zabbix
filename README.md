@@ -1,3 +1,28 @@
+
+# IMPORTANT
+
+**This is a planned fork suitable for use in production.**
+
+```bash
+ansible-galaxy collection install libredevops.zabbix:2.3.1-a
+```
+
+At LibreDevOps we used the `community.zabbix` collection every day to manage multiple Zabbix installations that are in production.
+
+Sometimes we experience bugs that we can solve quickly and reliably and/or we incorporate features that we find interesting for our own and other people's use cases, which is why, like other members of the community, we share them with the upstream via PR. This will always remain this way.
+
+However, since the upstream merge may take longer than our operations are capable of supporting, we not only use this fork to propose improvements but also to maintain our own stable early adopter version, with all those improvements incorporated from day zero.
+
+We maintain here in summary, 2 important branches:
+- `libredevops-master`: our stable version suitable for production use in which we have already merged features and bugfixes (own or from the community) and which have already been proposed to the upstream `community.zabbix`
+- `main`: a faithful mirror of the upstream `community.zabbix` (From here we start to work on each new correction or improvement)
+
+To keep versioning simple and easy to relate to upstream, our versions always use the "number part" identical to the upstream version we started from, adding a `-[a-z]` suffix (using the alphabet in incremental order each time a change is added, for example `2.3.1-a`). Take a look at our [CHANGELOG](https://github.com/LibreDevOps/libredevops.zabbix/blob/libredevops-master/CHANGELOG.rst) to understand what has changed.
+
+We invite you to share your improvements on upstream, but we will also be happy if you do so here.
+
+-----
+
 # Zabbix collection for Ansible
 
 Plugins:

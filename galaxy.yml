@@ -1,7 +1,6 @@
----
-namespace: community
+namespace: libredevops
 name: zabbix
-version: 2.3.1
+version: 2.3.1-a
 readme: README.md
 authors:
   - Dusan Matejka (@D3DeFi)
@@ -9,15 +8,17 @@ authors:
   - Werner Dijkerman (@dj-wasabi)
   - Troy Ward (@pyrodie18)
   - Evgeny Yurchenko (@BGmot)
-description: Collection allowing to configure resources in Zabbix monitoring system
+  - vamgnu
+  - santiagomr <s@santiagomr.com>
+description: your collection description
 license_file: LICENSE
 tags:
   - monitoring
   - zabbix
-repository: https://github.com/ansible-collections/community.zabbix.git
-documentation: https://github.com/ansible-collections/community.zabbix.git
-homepage: https://github.com/ansible-collections/community.zabbix
-issues: https://github.com/ansible-collections/community.zabbix/issues
+repository: https://github.com/LibreDevOps/libredevops.zabbix.git
+documentation: https://github.com/LibreDevOps/libredevops.zabbix.git
+homepage: https://github.com/LibreDevOps/libredevops.zabbix
+issues: https://github.com/LibreDevOps/libredevops.zabbix/issues
 dependencies:
   ansible.windows: "*"
   ansible.netcommon: ">=3.1.1"
@@ -25,3 +26,5 @@ dependencies:
   community.general: "*"
   community.mysql: "*"
   community.postgresql: "*"
+build_ignore: []
+

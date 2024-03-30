@@ -1,9 +1,16 @@
 ==============================
-community.zabbix Release Notes
+libredevops.zabbix Release Notes
 ==============================
 
 .. contents:: Topics
 
+v2.3.1-a
+======
+
+Bugfixes
+--------
+
+- Explicit `become=false` to avoid issues with HTTAPI in certain scenarios (https://github.com/ansible-collections/community.zabbix/pull/1199)
 
 v2.3.1
 ======
@@ -704,7 +711,7 @@ v0.2.0
 Release Summary
 ---------------
 
-| Release date: 2020-06-15 
+| Release date: 2020-06-15
 
 Minor Changes
 -------------
