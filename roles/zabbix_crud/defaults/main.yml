@@ -3,13 +3,17 @@
 
 # Defaults vars to connect via API:
 zabbix_api_server_port: 80
+zabbix_api_url_path: 'zabbix'
 zabbix_api_use_ssl: false
 zabbix_api_validate_certs: false
-zabbix_api_url_path: 'zabbix'
-zabbix_api_http_user: "Admin"
-zabbix_api_http_password: "zabbix"
-# zabbix_api_auth_key: 8ec0d52432c15c91fcafe9888500cf9a607f44091ab554dbee860f6b44fac895
+zabbix_api_http_user: Admin
+zabbix_api_http_password: !unsafe zabbix
+# zabbix_api_auth_key: a_previously_generated_token
 
+
+zabbix_crud_host_groups: []
+  # - host_group: "Web Servers"
+  #   state: absent # or present
 
 zabbix_crud_mediatypes: []
   # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_mediatype_module.html#ansible-collections-community-zabbix-zabbix-mediatype-module
@@ -47,7 +51,7 @@ zabbix_crud_mediatypes: []
   #   webhook_script:
   #   webhook_timeout:
 
-zabbix_crud_zabbix_usergroups: []
+zabbix_crud_usergroups: []
   # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_usergroup_module.html#ansible-collections-community-zabbix-zabbix-usergroup-module
   # - name: operators
   #   debug_mode:
@@ -80,7 +84,7 @@ zabbix_crud_user_roles: []
   #   type: "User" # by default. Options: User | Admin | Super Admin
   #   rules: [] # details: https://www.zabbix.com/documentation/current/en/manual/api/reference/role/object#role-rules
 
-zabbix_crud_zabbix_users: []
+zabbix_crud_users: []
   # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_user_module.html#ansible-collections-community-zabbix-zabbix-user-module
   # - username: jperez
   #   usrgrps:
@@ -103,15 +107,12 @@ zabbix_crud_zabbix_users: []
   #   user_medias:
   #     - { mediatype: Help Desk, sendto: juan.perez@my_domain.org }
 
-zabbix_crud_host_groups: []
-  # - host_group: "Web Servers"
-  #   state: absent # or present
 
-zabbix_crud_templates: []
+zabbix_crud_json_templates: []
   # # JSON files to import:
   # - "{{ playbook_dir }}/files/zabbix_crud/json_templates/Linux_by_zabbix_agent_activ.json"
 
-zabbix_crud_zabbix_hosts: []
+zabbix_crud_hosts: []
   # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_host_module.html#ansible-collections-community-zabbix-zabbix-host-module
   # - host_name: hostname
   #   visible_name: Visible Name

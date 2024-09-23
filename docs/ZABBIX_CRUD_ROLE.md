@@ -1,15 +1,4 @@
-# community.zabbix.zabbix_proxy role
-
-**Table of Contents**
-
-- [Overview](#overview)
-  * [Zabbix Versions](#zabbix-versions)
-- [Role Variables](#role-variables)
-  * [Main variables](#main-variables)
-  * [Zabbix API variables](#zabbix-api-variables)
-- [Example Playbook](#example-playbook)
-- [License](#license)
-- [Author Information](#author-information)
+# community.zabbix.zabbix_crud role
 
 # Overview
 

@@ -1,39 +1,44 @@
 ---
 # tasks file for zabbix_crud
 
-- name: '[Zabbix CRUD] Register password access'
-  set_fact:
-    password_access: "{{ zabbix_api_http_password is defined and zabbix_api_http_password is string and zabbix_api_http_password | length > 0 }}"
+- block:
 
-- name: '[Zabbix CRUD] Register token access'
-  set_fact:
-    token_access:
-      "{{ zabbix_api_auth_key is defined and zabbix_api_auth_key is string and zabbix_api_auth_key | length > 0 }}"
+  - name: '[Zabbix CRUD] Register password access'
+    set_fact:
+      password_access:
+        "{{ zabbix_api_http_password is defined and zabbix_api_http_password is string and zabbix_api_http_password | length > 0 }}"
 
-- name: '[Zabbix CRUD] Check conflict between token and password access configuration'
-  ansible.builtin.debug:
-    msg: "Token method and user/password method was detected, proceeding with token method."
-  when: password_access and token_access
+  - name: '[Zabbix CRUD] Register token access'
+    set_fact:
+      token_access:
+        "{{ zabbix_api_auth_key is defined and zabbix_api_auth_key is string and zabbix_api_auth_key | length > 0 }}"
 
-- name: '[Zabbix CRUD] Set common facts connection vía API'
-  ansible.builtin.set_fact:
-    ansible_network_os: community.zabbix.zabbix
-    ansible_connection: httpapi
-    ansible_httpapi_port: "{{ zabbix_api_server_port }}"
-    ansible_httpapi_use_ssl: "{{ zabbix_api_use_ssl }}"
-    ansible_httpapi_validate_certs: "{{ zabbix_api_validate_certs }}"
-    ansible_zabbix_url_path: "{{ zabbix_api_zabbix_url_path }}"
+  - name: '[Zabbix CRUD] Check conflict between token and password access configuration'
+    ansible.builtin.debug:
+      msg: "Token method and user/password method was detected, proceeding with token method."
+    when: password_access and token_access
 
-- name: '[Zabbix CRUD] Set password access'
-  ansible.builtin.set_fact:
-    ansible_user: "{{ zabbix_api_http_user }}"
-    ansible_httpapi_pass: "{{ zabbix_api_http_password }}"
-  when: password_access and not token_access
+  - name: '[Zabbix CRUD] Set common facts connection vía API'
+    ansible.builtin.set_fact:
+      ansible_network_os: community.zabbix.zabbix
+      ansible_connection: httpapi
+      ansible_httpapi_port: "{{ zabbix_api_server_port }}"
+      ansible_httpapi_use_ssl: "{{ zabbix_api_use_ssl }}"
+      ansible_httpapi_validate_certs: "{{ zabbix_api_validate_certs }}"
+      ansible_zabbix_url_path: "{{ zabbix_api_url_path }}"
 
-- name: '[Zabbix CRUD] Set token access'
-  ansible.builtin.set_fact:
-    ansible_zabbix_auth_key: "{{ zabbix_api_auth_key }}"
-  when: token_access or ( token_access and password_access )
+  - name: '[Zabbix CRUD] Set password access'
+    ansible.builtin.set_fact:
+      ansible_user: "{{ zabbix_api_http_user }}"
+      ansible_httpapi_pass: "{{ zabbix_api_http_password }}"
+    when: not token_access
+
+  - name: '[Zabbix CRUD] Set token access'
+    ansible.builtin.set_fact:
+      ansible_zabbix_auth_key: "{{ zabbix_api_auth_key }}"
+    when: token_access
+
+  tags: always
 
 - name: '[Zabbix CRUD] Wrap for zabbix_group - Create/Update/Delete Zabbix Host Groups'
   become: false
@@ -41,6 +46,7 @@
     host_groups: "{{ item.host_group }}"
     state: "{{ item.state | default(omit) }}"
   loop: "{{ zabbix_crud_host_groups }}"
+  tags: zabbix_crud_host_groups
 
 - name: '[Zabbix CRUD] Wrap for zabbix_mediatype module - Create/Update/Delete Zabbix media types'
   become: false
@@ -76,6 +82,7 @@
     webhook_script: "{{ item.webhook_script | default(omit) }}"
     webhook_timeout: "{{ item.webhook_timeout | default(omit) }}"
   loop: "{{ zabbix_crud_mediatypes }}"
+  tags: zabbix_crud_mediatypes
 
 - name: '[Zabbix CRUD] Wrap for zabbix_usergroup module - Create/Update/Delete Zabbix User Groups'
   become: false
@@ -90,7 +97,8 @@
     tag_filters: "{{ item.tag_filters | default(omit) }}"
     templategroup_rights: "{{ item.templategroup_rights | default(omit) }}"
     userdirectory: "{{ item.userdirectory | default(omit) }}"
-  loop: "{{ zabbix_crud_zabbix_usergroups }}"
+  loop: "{{ zabbix_crud_usergroups }}"
+  tags: zabbix_crud_usergroups
 
 - name: '[Zabbix CRUD] Wrap for zabbix_user_role module - Create/Update/Delete Zabbix User Roles'
   become: false
@@ -100,6 +108,7 @@
     type: "{{ item.type | default('User') }}"
     rules: "{{ item.rules | default(omit) }}"
   loop: "{{ zabbix_crud_user_roles }}"
+  tags: zabbix_crud_user_roles
 
 - name: '[Zabbix CRUD] Wrap for zabbix_user module - Create/Update/Delete Zabbix Users'
   become: false
@@ -122,8 +131,8 @@
     theme: "{{ item.theme | default(omit) }}"
     timezone: "{{ item.timezone | default(omit) }}"
     user_medias: "{{ item.user_medias | default(omit) }}"
-  # no_log: true
-  loop: "{{ zabbix_crud_zabbix_users }}"
+  no_log: true
+  loop: "{{  zabbix_crud_users }}"
   tags: zabbix_crud_users
 
 - name: '[Zabbix CRUD] Import provided JSON templates'
@@ -132,7 +141,7 @@
     template_json: "{{ lookup('file', item ) }}"
     state: present
   loop: "{{ zabbix_crud_json_templates }}"
-  tags: zabbix_crud_templates
+  tags: zabbix_crud_json_templates
 
 - name: '[Zabbix CRUD] Wrap for zabbix_host module - Create/Update/Delete Zabbix Hosts'
   become: false
@@ -161,8 +170,8 @@
     ipmi_password: "{{ item.ipmi_password | default(omit) }}"
     ipmi_privilege: "{{ item.ipmi_privilege | default(omit) }}"
     ipmi_username: "{{ item.ipmi_username | default(omit) }}"
-  loop: "{{ zabbix_crud_zabbix_hosts }}"
-  tags: zabbix_crud_zabbix_hosts
+  loop: "{{  zabbix_crud_hosts }}"
+  tags:  zabbix_crud_hosts
 
 - name: '[Zabbix CRUD] Wrap for zabbix_script module - Create/Update/Delete Zabbix Scripts'
   become: false
@@ -209,4 +218,3 @@
     status: "{{ item.status | default(omit) }}"
   loop: "{{ zabbix_crud_actions }}"
   tags: zabbix_crud_actions
-
