@@ -1,0 +1,203 @@
+---
+# defaults file for zabbix_crud
+
+# Defaults vars to connect via API:
+zabbix_api_server_port: 80
+zabbix_api_url_path: 'zabbix'
+zabbix_api_use_ssl: false
+zabbix_api_validate_certs: false
+zabbix_api_http_user: Admin
+zabbix_api_http_password: !unsafe zabbix
+# zabbix_api_auth_key: a_previously_generated_token
+
+
+zabbix_crud_host_groups: []
+  # - host_group: "Web Servers"
+  #   state: absent # or present
+
+zabbix_crud_mediatypes: []
+  # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_mediatype_module.html#ansible-collections-community-zabbix-zabbix-mediatype-module
+  # - name: Help Desk
+  #   type: email # Options: email | script | sms | webhook | jabber | ez_texting
+  #   attempt_interval:
+  #   description: "Help desk team"
+  #   event_menu:
+  #   event_menu_name:
+  #   event_menu_url:
+  #   gsm_modem:
+  #   max_attempts:
+  #   max_sessions:
+  #   message_templates:
+  #     - { body: "Problem started at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n", eventsource: triggers, recovery: operations, subject: "Problem: {EVENT.NAME}" }
+  #   message_text_limit:
+  #   password:
+  #   process_tags:
+  #   script_name:
+  #   script_params:
+  #   smtp_authentication: true # or false
+  #   smtp_email: zabbix@my_domain.org
+  #   smtp_helo: ""
+  #   smtp_security: none # Options: none | STARTTLS | SSL/TLS
+  #   smtp_server: mail.my_domain.org
+  #   smtp_server_port:
+  #   smtp_verify_host: true # or false
+  #   smtp_verify_peer: true # or false
+  #   state:
+  #   status:
+  #   username:
+  #   password:
+  #   webhook_params:
+  #     - {name: alert_message, value: "{ALERT_MESSAGE}"}
+  #   webhook_script:
+  #   webhook_timeout:
+
+zabbix_crud_usergroups: []
+  # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_usergroup_module.html#ansible-collections-community-zabbix-zabbix-usergroup-module
+  # - name: operators
+  #   debug_mode:
+  #   gui_access: "disable" # "disable" | "default" | "internal" | "LDAP"
+  #   hostgroup_rights: # for zabbix >= 6
+  #     - host_group: "Web Servers"
+  #       permission: "read-only"
+  #     - host_group: "Hipervisors"
+  #       permission: "read-write"
+  #     - host_group: "Linux Servers"
+  #       permission: "denied"
+  #   rights:  # for zabbix <= 6
+  #     - host_group: "Web Servers"
+  #       permission: "read-only"
+  #     - host_group: "Hipervisors"
+  #       permission: "read-write"
+  #     - host_group: "Linux Servers"
+  #       permission: "denied"
+  #   state: absent # or present
+  #   status:
+  #   tag_filters:
+  #     - host_group: "Web Servers"
+  #       tag: ""
+  #       value: ""
+
+zabbix_crud_user_roles: []
+  # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_user_role_module.html#ansible-collections-community-zabbix-zabbix-user-role-module
+  # - name: TI Operator
+  #   state: present # by default. Or absent
+  #   type: "User" # by default. Options: User | Admin | Super Admin
+  #   rules: [] # details: https://www.zabbix.com/documentation/current/en/manual/api/reference/role/object#role-rules
+
+zabbix_crud_users: []
+  # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_user_module.html#ansible-collections-community-zabbix-zabbix-user-module
+  # - username: jperez
+  #   usrgrps:
+  #     - "operators"  #   type: "Zabbix super admin" # "Zabbix super admin" | "Zabbix user" | "Zabbix admin"
+  #   after_login_url:
+  #   autologin:
+  #   autologout:
+  #   current_password:
+  #   lang:
+  #   name: Juan
+  #   override_passwd: yes # or no
+  #   passwd: "super-secret-pass"
+  #   refresh:
+  #   role_name: "User role" # By default: "User role" | "Admin role" | "Guest role" | "Super admin role"
+  #   rows_per_page:
+  #   state: "present" # "present" by default or "absent"
+  #   surname: Perez
+  #   theme:
+  #   timezone:
+  #   user_medias:
+  #     - { mediatype: Help Desk, sendto: juan.perez@my_domain.org }
+
+
+zabbix_crud_json_templates: []
+  # # JSON files to import:
+  # - "{{ playbook_dir }}/files/zabbix_crud/json_templates/Linux_by_zabbix_agent_activ.json"
+
+zabbix_crud_hosts: []
+  # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_host_module.html#ansible-collections-community-zabbix-zabbix-host-module
+  # - host_name: hostname
+  #   visible_name: Visible Name
+  #   ca_cert:
+  #   tls_accept:
+  #   tls_connect:
+  #   tls_psk:
+  #   tls_psk_identity:
+  #   tls_subject:
+  #   description: Description
+  #   host_groups: Host groups
+  #   link_templates:
+  #     - Linux by Zabbix agent
+  #   status: enabled
+  #   state: present
+  #   proxy: my_proxy
+  #   macros:
+  #     - macro: '{$MY_MACRO}'
+  #       value: my_value
+  #     - macro: '{$MY_SECRET_MACRO}'
+  #       value: "{{ vault_my_secret_macro }}"
+  #       type: secret
+  #   interfaces:
+  #     - ip: "{{ ansible_host }}"
+  #       type: snmp # valores: agent, 1, snmp, 2, ipmi, 3, jmx, 4
+  #       useip: 1
+  #       dns: ""
+  #       main: 1
+  #       port: 161
+  #       details:
+  #         version: 3 # SNMP version, values: 1, 2 o 3
+  #         securitylevel: 2 # Options: 0 (noAuthNoPriv), 1 (authNoPriv), 2 (authPriv)
+  #         authprotocol: 1 # Options: 0 (MD5), 1 (SHA)
+  #         authpassphrase: '{$AUTHPASSPHRASE}'
+  #         privprotocol: 1 # Options: 0 (DES), 1 (AES)
+  #         privpassphrase: '{$PRIVPASSPHRASE}'
+  #         securityname: "snmp_user"
+  #         contextname: ""
+  #   tags:
+  #     - { tag: , value:  }
+  #   force:
+  #   inventory_mode:
+  #   inventory_zabbix:
+  #   ipmi_authtype:
+  #   ipmi_password:
+  #   ipmi_privilege:
+  #   ipmi_username:
+
+zabbix_crud_scripts: []
+  # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_script_module.html#ansible-collections-community-zabbix-zabbix-script-module
+  # - name: Example script
+  #   command: "return 0"
+  #   script_type: webhook # Options: script | ipmi | ssh | telnet | webhook
+  #   authtype:
+  #   confirmation:
+  #   description:
+  #   execute_on:
+  #   host_access:
+  #   host_group:
+  #   menu_path:
+  #   parameters:
+  #   password:
+  #   port:
+  #   privatekey:
+  #   publickey:
+  #   scope:
+  #   script_timeout:
+  #   state:
+  #   user_group:
+  #   username:
+
+zabbix_crud_actions: []
+  # # For details: https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_action_module.html#ansible-collections-community-zabbix-zabbix-action-module
+  # - name: Alert TI team
+  #   acknowledge_operations: []
+  #   conditions: []
+  #   esc_period:
+  #   eval_type:
+  #   event_source:
+  #   formula:
+  #   notify_if_canceled:
+  #   operations: []
+  #   pause_in_maintenance:
+  #   pause_symptoms:
+  #   recovery_operations: []
+  #   state:
+  #   status:
+
