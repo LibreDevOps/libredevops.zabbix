@@ -4,6 +4,11 @@ libredevops.zabbix Release Notes
 
 .. contents:: Topics
 
+v2.3.1-b
+======
+
+New role to automate CRUD tasks on a Zabbix server via API: [zabbix_crud](https://github.com/LibreDevOps/libredevops.zabbix/tree/libredevops-master/roles/zabbix_crud)
+
 v2.3.1-a
 ======
 
